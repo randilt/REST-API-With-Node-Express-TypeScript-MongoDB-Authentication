@@ -28,7 +28,7 @@ server.listen(PORT, () => {
 });
 
 mongoose.Promise = Promise;
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL); // Connecting with the mongoDB database
 mongoose.connection.on("connected", () => {
   console.log("MongoDB connected successfully");
 });

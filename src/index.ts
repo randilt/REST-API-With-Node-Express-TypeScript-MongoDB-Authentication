@@ -4,9 +4,13 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 const PORT = 8080;
+const DB_URL = process.env.MONGO_URL; // MongoDB URL
 
 app.use(
   cors({
@@ -21,4 +25,13 @@ const server = http.createServer(app);
 
 server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/ `);
+});
+
+mongoose.Promise = Promise;
+mongoose.connect(DB_URL);
+mongoose.connection.on("connected", () => {
+  console.log("MongoDB connected successfully");
+});
+mongoose.connection.on("error", (error) => {
+  console.error("MongoDB connection error: " + error);
 });
